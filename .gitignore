@@ -1,7 +1,1 @@
 .env
-
-#bower bloat
-public/bootstrap/grunt
-public/bootstrap/less
-public/bootstrap/test-infra
-public/jquery/src

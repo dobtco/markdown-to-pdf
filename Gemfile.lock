@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/zakird/wkhtmltopdf_binary_gem
-  revision: 00d1104350f42b00f4aab476a3df5da218b3b34e
+  revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
   specs:
     wkhtmltopdf-binary (0.9.9.3)
 

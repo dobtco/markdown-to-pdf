@@ -39,18 +39,30 @@ module MarkdownToPDF
     end
 
     def html
-      @html ||= client.markdown markdown, :context => nwo
+      @html ||= "<div class='markdown-body'>#{client.markdown(markdown, :context => nwo)}</div>"
     end
 
     def stylesheet
-      File.expand_path "public/bootstrap/dist/css/bootstrap.css", File.dirname( __FILE__ )
+      File.expand_path "public/stylesheet.css", File.dirname( __FILE__ )
     end
 
     def kit
       @kit ||= begin
-        kit = PDFKit.new(html, :page_size => 'Letter')
+        kit = PDFKit.new(dobt_header + html, :page_size => 'Letter')
         kit.stylesheets << stylesheet
         kit
+      end
+    end
+
+    def dobt_header
+      if params['no_header']
+        ''
+      else
+        %{
+          <div class='dobt_header'>
+            <img src='http://www.dobt.co/img/dobt_logo.png' />
+          </div>
+        }
       end
     end
 
