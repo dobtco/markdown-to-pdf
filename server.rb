@@ -1,10 +1,20 @@
 require 'sinatra'
-require 'octokit'
+require 'sinatra/auth/github'
 require 'dotenv'
 require 'pdfkit'
 
 module MarkdownToPDF
   class App < Sinatra::Base
+
+    enable :sessions
+
+    set :github_options, {
+      :scopes    => "user repo",
+      :secret    => ENV['GITHUB_CLIENT_SECRET'],
+      :client_id => ENV['GITHUB_CLIENT_ID'],
+    }
+
+    register Sinatra::Auth::Github
 
     configure :development do
       Dotenv.load
@@ -28,7 +38,7 @@ module MarkdownToPDF
     end
 
     def client
-      @client ||= Octokit::Client.new :access_token => ENV["GITHUB_TOKEN"]
+      @client ||= github_user.api
     end
 
     def markdown
@@ -67,6 +77,7 @@ module MarkdownToPDF
     end
 
     get "/:owner/:repo/blob/:ref/*" do
+      authenticate!
       content_type "application/pdf"
       kit.to_pdf
     end

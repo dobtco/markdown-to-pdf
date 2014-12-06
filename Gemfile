@@ -7,6 +7,7 @@ gem "wkhtmltopdf-binary", git: "https://github.com/zakird/wkhtmltopdf_binary_gem
 gem "dotenv"
 gem "rack-ssl-enforcer"
 gem "foreman"
+gem "sinatra_auth_github"
 
 group :test do
   gem "rake"
