@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/chalkdotcom/wkhtmltopdf-heroku.git
+  revision: b2a3f6c6a1e2f98ca20f92fedac79e4893b24a60
+  specs:
+    wkhtmltopdf-heroku (1.0.0)
+
+GIT
   remote: https://github.com/zakird/wkhtmltopdf_binary_gem
   revision: 77a62c35e4a9bb8d6583ffeadf0073ac92748a91
   specs:
@@ -86,3 +92,4 @@ DEPENDENCIES
   vcr
   webmock
   wkhtmltopdf-binary!
+  wkhtmltopdf-heroku!

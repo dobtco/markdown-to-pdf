@@ -3,6 +3,12 @@ require 'sinatra/auth/github'
 require 'dotenv'
 require 'pdfkit'
 
+if ENV['HEROKU']
+  require 'wkhtmltopdf-heroku'
+else
+  require 'wkhtmltopdf-binary'
+end
+
 module MarkdownToPDF
   class App < Sinatra::Base
 
