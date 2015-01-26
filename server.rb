@@ -85,6 +85,7 @@ module MarkdownToPDF
     get "/:owner/:repo/blob/:ref/*" do
       authenticate!
       content_type "application/pdf"
+      headers['Content-Disposition'] = 'attachment'
       kit.to_pdf
     end
 
