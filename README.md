@@ -23,7 +23,7 @@ Pro-tip: You can swap `.md` for `.pdf` in the URL if you want to be super sneaky
 
 ## Running locally
 
-1. Register an app at https://github.com/settings/applications
+1. Register an app at https://github.com/settings/applications, setting the callback URL to "http://localhost:9292/auth/github/callback"
 2. `cp .env.example .env` and set variables
 3. `script/bootstrap`
 4. `script/server`
