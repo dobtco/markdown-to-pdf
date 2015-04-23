@@ -23,8 +23,11 @@ Pro-tip: You can swap `.md` for `.pdf` in the URL if you want to be super sneaky
 
 ## Running locally
 
-1. `script/bootstrap`
-2. `script/server`
+1. Register an app at https://github.com/settings/applications
+2. `cp .env.example .env` and set variables
+3. `script/bootstrap`
+4. `script/server`
+5. Follow the usage instructions above, using "localhost:9292" as your instance's hostname.
 
 ## Deploying
 
