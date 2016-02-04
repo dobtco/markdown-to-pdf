@@ -1,20 +1,29 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "sinatra"
-gem "octokit"
-gem "pdfkit"
-gem "dotenv"
-gem "rack-ssl-enforcer"
-gem "foreman"
-gem "sinatra_auth_github"
-gem "wkhtmltopdf-binary", git: "https://github.com/zakird/wkhtmltopdf_binary_gem"
-gem "wkhtmltopdf-heroku", git: "https://github.com/chalkdotcom/wkhtmltopdf-heroku.git"
+ruby File.read('.ruby-version').strip
+
+gem 'sinatra'
+gem 'octokit'
+gem 'pdfkit'
+gem 'dotenv'
+gem 'rack-ssl-enforcer'
+gem 'foreman'
+gem 'sinatra_auth_github'
+
+group :production do
+  gem 'wkhtmltopdf-heroku'
+end
+
+group :development, :test do
+  gem 'wkhtmltopdf-binary-edge'
+end
 
 group :test do
-  gem "rake"
-  gem "vcr"
-  gem "shoulda"
-  gem "bundler"
-  gem "webmock"
-  gem "rack-test"
+  gem 'rake'
+  gem 'vcr'
+  gem 'shoulda'
+  gem 'bundler'
+  gem 'webmock'
+  gem 'rack-test'
+  gem 'rubocop'
 end

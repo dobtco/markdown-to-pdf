@@ -1,17 +1,11 @@
 require 'sinatra'
 require 'sinatra/auth/github'
+require 'octokit'
 require 'dotenv'
 require 'pdfkit'
 
-if ENV['HEROKU']
-  require 'wkhtmltopdf-heroku'
-else
-  require 'wkhtmltopdf-binary'
-end
-
 module MarkdownToPDF
   class App < Sinatra::Base
-
     enable :sessions
 
     set :github_options, {
@@ -27,30 +21,31 @@ module MarkdownToPDF
     end
 
     configure :production do
+      require 'wkhtmltopdf-heroku'
       require 'rack-ssl-enforcer'
       use Rack::SslEnforcer
     end
 
     def nwo
-      "#{params["owner"]}/#{params["repo"]}"
+      "#{params['owner']}/#{params['repo']}"
     end
 
     def path
-      params["splat"].join("/").gsub /\.pdf$/, ".md"
+      params['splat'].join('/').gsub(/\.pdf$/, '.md')
     end
 
     def ref
-      params["ref"]
+      params['ref']
     end
 
     def client
-      @client ||= github_user.api
+      @client ||= Octokit::Client.new access_token: ENV['GITHUB_TOKEN']
     end
 
     def markdown
       @markdown ||= begin
-        response = client.contents nwo, { :path => path, :ref => ref }
-        Base64.decode64(response.content).force_encoding("utf-8")
+        response = client.contents nwo, path: path, ref: ref
+        Base64.decode64(response.content).force_encoding('utf-8')
       end
     end
 
@@ -64,7 +59,7 @@ module MarkdownToPDF
 
     def kit
       @kit ||= begin
-        kit = PDFKit.new(dobt_header + html, :page_size => 'Letter')
+        kit = PDFKit.new(dobt_header + html, page_size: 'Letter')
         kit.stylesheets << stylesheet
         kit
       end
@@ -82,12 +77,15 @@ module MarkdownToPDF
       end
     end
 
-    get "/:owner/:repo/blob/:ref/*" do
+    get '/:owner/:repo/blob/:ref/*' do
       authenticate!
-      content_type "application/pdf"
+      content_type 'application/pdf'
       headers['Content-Disposition'] = 'attachment'
       kit.to_pdf
     end
 
+    def client
+      @client ||= github_user.api
+    end
   end
 end
