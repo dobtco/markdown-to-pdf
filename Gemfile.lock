@@ -77,7 +77,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff
     wkhtmltopdf-binary-edge (0.12.2.1)
-    wkhtmltopdf-heroku (2.12.2.4)
+    wkhtmltopdf-heroku (2.12.3.0)
 
 PLATFORMS
   ruby
